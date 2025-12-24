@@ -42,7 +42,7 @@ header {
         #750787
     );
     color: white;
-    padding: 20px;
+    padding: 25px;
 }
 
 p {
@@ -73,66 +73,36 @@ img {
     border-radius: 10px;
 }
 
-/* FORM */
-form {
-    max-width: 520px;
-    margin: 40px auto;
-    background: rgba(255,255,255,0.95);
-    padding: 25px;
-    border-radius: 15px;
-    text-align: left;
-}
-
-label {
-    display: block;
-    margin-top: 15px;
-    font-weight: bold;
-}
-
-input, select {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-}
-
-#priceBox {
-    margin-top: 20px;
-    padding: 15px;
-    background: #e8f5e9;
-    border-radius: 8px;
-    font-weight: bold;
-    text-align: center;
-    display: none;
-}
-
-button {
-    margin-top: 25px;
-    width: 100%;
-    padding: 12px;
+/* BOOK NOW BUTTON */
+.book-btn {
+    margin: 30px auto;
+    padding: 15px 35px;
+    font-size: 1.2rem;
     background: #750787;
     color: white;
     border: none;
-    font-size: 1.1rem;
+    border-radius: 30px;
     cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-/* SUCCESS POPUP */
-#successPopup {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
+.book-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
 
-#successPopup div {
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    max-width: 300px;
-    text-align: center;
+/* GOOGLE FORM SECTION */
+.form-section {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 25px;
+    background: rgba(255,255,255,0.95);
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+}
+
+.form-section h2 {
+    margin-bottom: 20px;
 }
 </style>
 </head>
@@ -158,106 +128,32 @@ Don't miss it!. Use HDFC credit card for 69% off
     <li>1 kuzhimandhi for 2 hours</li>
 </ul>
 
-<h3>SCROLL DOWN FOR BOOKING!</h3>
+<button class="book-btn" onclick="scrollToForm()">BOOK NOW</button>
 
 <img src="FYC1.JPG" alt="FYC THE LEGEND">
 
-<form id="bookingForm">
-<h2>BOOK YOUR SLOT</h2>
+<!-- GOOGLE FORM -->
+<div class="form-section" id="booking">
+    <h2>BOOK YOUR SLOT</h2>
 
-<label>Name</label>
-<input type="text" required>
-
-<label>Date of Birth</label>
-<input type="date" required>
-
-<label>Time</label>
-<input type="time" required>
-
-<label>Package</label>
-<select id="package" required>
-    <option value="">Select</option>
-    <option value="299">30min - 299</option>
-    <option value="99">5min - 99</option>
-    <option value="999">Full Night - 999</option>
-    <option value="0">1 Kuzhimandhi - 2 Hours</option>
-</select>
-
-<label>Payment Method</label>
-<select required>
-    <option>Cash</option>
-    <option>UPI</option>
-    <option>Card</option>
-</select>
-
-<label>Date</label>
-<input type="date" required>
-
-<label>HDFC Card?</label>
-<select id="hdfc" required>
-    <option value="">Select</option>
-    <option value="yes">Yes</option>
-    <option value="no">No</option>
-</select>
-
-<div id="priceBox"></div>
-
-<button type="submit">SUBMIT</button>
-</form>
-
-<!-- SUCCESS POPUP -->
-<div id="successPopup">
-    <div>
-        <h2>🎉 Booking Successful!</h2>
-        <p>Thank you for choosing FYC THE LEGEND</p>
-        <button onclick="closePopup()">OK</button>
-    </div>
+    <iframe 
+        src="https://docs.google.com/forms/d/e/1FAIpQLSfXsqXjfli25iQid905HMrU3vE1YCtCngTVxfB7Wkyx5cfA4g/viewform?embedded=true"
+        width="100%"
+        height="1200"
+        frameborder="0"
+        marginheight="0"
+        marginwidth="0">
+        Loading…
+    </iframe>
 </div>
 
 <script>
-const pkg = document.getElementById("package");
-const hdfc = document.getElementById("hdfc");
-const priceBox = document.getElementById("priceBox");
-
-function calculatePrice() {
-    if (!pkg.value) return;
-
-    let price = Number(pkg.value);
-    if (hdfc.value === "yes" && price > 0) {
-        price = Math.round(price * 0.31); // 69% off
-    }
-
-    priceBox.style.display = "block";
-    priceBox.innerText = price === 0
-        ? "Special Package Selected"
-        : "Final Price: ₹" + price;
-}
-
-pkg.addEventListener("change", calculatePrice);
-hdfc.addEventListener("change", calculatePrice);
-
-document.getElementById("bookingForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-    document.getElementById("successPopup").style.display = "flex";
-    this.reset();
-    priceBox.style.display = "none";
-});
-
-function closePopup() {
-    document.getElementById("successPopup").style.display = "none";
+function scrollToForm() {
+    document.getElementById("booking").scrollIntoView({
+        behavior: "smooth"
+    });
 }
 </script>
-
-<!-- GOOGLE FORM EMBED (ADDED) -->
-<iframe 
-  src="https://docs.google.com/forms/d/e/1FAIpQLSfXsqXjfli25iQid905HMrU3vE1YCtCngTVxfB7Wkyx5cfA4g/viewform?embedded=true"
-  width="100%"
-  height="1200"
-  frameborder="0"
-  marginheight="0"
-  marginwidth="0">
-Loading…
-</iframe>
 
 </body>
 </html>
